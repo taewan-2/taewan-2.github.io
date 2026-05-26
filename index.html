@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공직서무실록 - 스마트 업무 요람</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- --- SIDEBAR --- -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">書</div>
+        <div class="logo-text">
+          <h1>공직서무실록</h1>
+          <p>스마트 업무 요람</p>
+        </div>
+      </div>
+
+      <!-- Quick Search Trigger -->
+      <button class="sidebar-search-btn" id="search-trigger-btn">
+        <i data-lucide="search" style="width:16px;height:16px;"></i>
+        <span>업무 정보 검색...</span>
+        <span class="search-shortcut">Ctrl+K</span>
+      </button>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-menu">
+        <div class="menu-group-title">기본 홈</div>
+        <div class="menu-item active" data-tab="dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>대시보드</span>
+        </div>
+
+        <div class="menu-group-title">업무 매뉴얼</div>
+        <div class="menu-item" data-tab="handover">
+          <i data-lucide="folder-git-2"></i>
+          <span>부서별 인수인계</span>
+        </div>
+        
+        <div class="menu-group-title">초임자 실무 가이드</div>
+        <div class="menu-item" data-tab="excel">
+          <i data-lucide="file-spreadsheet"></i>
+          <span>엑셀 실무 마스터</span>
+        </div>
+        <div class="menu-item" data-tab="hwp">
+          <i data-lucide="file-text"></i>
+          <span>한글 공문서 규칙</span>
+        </div>
+        <div class="menu-item" data-tab="expenditure">
+          <i data-lucide="credit-card"></i>
+          <span>지출 & 회계 기초</span>
+        </div>
+
+        <div class="menu-group-title">스마트 행정 도구</div>
+        <div class="menu-item" data-tab="tools">
+          <i data-lucide="wrench"></i>
+          <span>행정 도구함</span>
+        </div>
+        <div class="menu-item" data-tab="ai-assistant">
+          <i data-lucide="bot"></i>
+          <span>AI 서무 비서</span>
+        </div>
+      </nav>
+
+      <!-- Bookmark Section -->
+      <div class="sidebar-bookmarks">
+        <div class="bookmarks-title">
+          <span>자주 찾는 페이지</span>
+          <i data-lucide="star" style="width: 14px; height: 14px; color: var(--warning);"></i>
+        </div>
+        <div class="bookmarks-list" id="bookmarks-list">
+          <p class="bookmark-link" style="color: var(--text-muted); font-size:11px;">등록된 즐겨찾기가 없습니다.</p>
+        </div>
+      </div>
+
+      <!-- Footer & Theme Toggle -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">서무</div>
+          <div class="user-info">
+            <p>신임 주무관</p>
+            <span>자치행정과</span>
+          </div>
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="테마 전환">
+          <i data-lucide="sun" class="sun-icon" style="width: 16px; height: 16px;"></i>
+          <i data-lucide="moon" class="moon-icon" style="width: 16px; height: 16px;"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- --- MAIN CONTAINER --- -->
+    <div class="main-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-title-area">
+          <h2 id="current-menu-title"><i data-lucide="layout-dashboard" style="color: var(--accent)"></i> 대시보드</h2>
+          <p id="current-menu-desc">오늘 해야 할 업무와 자주 찾는 업무 지식을 확인하세요.</p>
+        </div>
+        <div class="header-actions">
+          <div class="header-badge" id="today-date-badge">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            <span>2026. 05. 26.(화)</span>
+          </div>
+          <button class="header-btn bookmark-toggle" id="header-bookmark-btn">
+            <i data-lucide="star" style="width: 14px; height: 14px;"></i>
+            <span>즐겨찾기</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+
+        <!-- ==================== TAB 1: DASHBOARD ==================== -->
+        <section class="tab-content active" id="tab-dashboard">
+          <div class="hero-banner">
+            <div class="hero-text">
+              <h3>공직서무실록에 오신 것을 환영합니다! 👋</h3>
+              <p>인사이동 철의 업무 공백을 줄이고, 초임자들이 업무에 보다 신속하게 적응할 수 있도록 지원하는 지식 공유 대시보드입니다. 궁금한 실무 지식을 검색하거나 챗봇에게 물어보세요.</p>
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <!-- Left Area: Shortcuts & Quick guides -->
+            <div>
+              <div class="tip-banner">
+                <i data-lucide="sparkles"></i>
+                <div class="tip-content">
+                  <h4>💡 오늘의 실무 꿀팁</h4>
+                  <p>공문서에 날짜를 표기할 때는 <strong>"2026. 5. 26."</strong>와 같이 연, 월, 일 뒤에 반드시 마침표를 찍고 한 칸 띄어야 합니다. (2026.05.26 X, 2026. 5. 26 X)</p>
+                </div>
+              </div>
+
+              <div class="card" style="margin-bottom: 24px;">
+                <div class="card-title">
+                  <i data-lucide="compass"></i>
+                  <span>빠른 실행 바로가기</span>
+                </div>
+                <div class="grid-responsive" style="margin-bottom: 0;">
+                  <div class="quick-link-item" onclick="switchTab('excel')">
+                    <div class="quick-link-icon"><i data-lucide="file-spreadsheet"></i></div>
+                    <div class="quick-link-text">
+                      <h4>주민번호 성별 추출</h4>
+                      <p>자주 쓰는 엑셀 수식 바로 복사</p>
+                    </div>
+                  </div>
+                  <div class="quick-link-item" onclick="switchTab('hwp')">
+                    <div class="quick-link-icon"><i data-lucide="file-text"></i></div>
+                    <div class="quick-link-text">
+                      <h4>공문서 끝 표시 규칙</h4>
+                      <p>한글 공문서 레이아웃 규격 확인</p>
+                    </div>
+                  </div>
+                  <div class="quick-link-item" onclick="switchTab('expenditure')">
+                    <div class="quick-link-icon"><i data-lucide="credit-card"></i></div>
+                    <div class="quick-link-text">
+                      <h4>여비 지급 기준</h4>
+                      <p>출장 여비 및 지출 증빙 서류 가이드</p>
+                    </div>
+                  </div>
+                  <div class="quick-link-item" onclick="switchTab('tools')">
+                    <div class="quick-link-icon"><i data-lucide="wrench"></i></div>
+                    <div class="quick-link-text">
+                      <h4>글자수/바이트 계산기</h4>
+                      <p>기안문 요약 내용 글자 제한 수 계산</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Area: Checklist & Schedule -->
+            <div>
+              <div class="card">
+                <div class="card-title">
+                  <i data-lucide="check-square"></i>
+                  <span>오늘의 서무 체크리스트</span>
+                </div>
+                <div class="todo-list" id="dashboard-todo-list">
+                  <!-- JS will load checklists -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 2: HANDOVER ==================== -->
+        <section class="tab-content" id="tab-handover">
+          <div class="card handover-selector-card">
+            <div class="card-title">
+              <i data-lucide="git-branch"></i>
+              <span>부서별 업무 매뉴얼 조회</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+              인사이동 후 본인 부서와 담당 팀을 선택하여 수행할 기본 업무와 필요한 매뉴얼을 찾아보세요.
+            </p>
+            <div class="selector-grid" style="margin-bottom: 24px;">
+              <div class="form-group">
+                <label for="handover-dept-selector" style="margin-bottom: 8px;">부서 선택</label>
+                <select class="form-select" id="handover-dept-selector">
+                  <option value="">-- 부서 선택 --</option>
+                  <option value="planning">기획예산실</option>
+                  <option value="admin">행정복지국</option>
+                  <option value="economy">경제건설국</option>
+                  <option value="agri">농업기술센터</option>
+                  <option value="health">보건소</option>
+                  <option value="water">상하수도사업소</option>
+                  <option value="town">읍·면 행정복지센터</option>
+                  <option value="assembly">양구군의회</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="handover-div-selector" style="margin-bottom: 8px;">과 선택</label>
+                <select class="form-select" id="handover-div-selector" disabled>
+                  <option value="">-- 과 선택 --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="handover-team-selector" style="margin-bottom: 8px;">팀 선택</label>
+                <select class="form-select" id="handover-team-selector" disabled>
+                  <option value="">-- 팀 선택 --</option>
+                </select>
+              </div>
+            </div>
+            <div class="org-chart-container" id="org-chart-container" style="display: none;">
+              <!-- JS will build the org chart here -->
+            </div>
+          </div>
+
+          <!-- Handover Details Dynamic Content -->
+          <div class="handover-details-area" id="handover-details-area">
+            <div class="detail-header">
+              <h3 id="handover-team-title">인사팀 업무 요람</h3>
+              <div class="header-badge" style="background-color: var(--success-bg); color: var(--success);">
+                <i data-lucide="info" style="width:14px;height:14px;"></i>
+                <span>매뉴얼 최종 업데이트: 2026. 05. 15.</span>
+              </div>
+            </div>
+
+            <div class="detail-grid">
+              <!-- Tasks & Manual Links -->
+              <div>
+                <div class="card" style="margin-bottom: 24px;">
+                  <div class="card-title">
+                    <i data-lucide="list-todo"></i>
+                    <span>고유/정기 업무 목록</span>
+                  </div>
+                  <div class="duty-list" id="handover-duties-list">
+                    <!-- JS loaded content -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sidebar Templates and Checklists -->
+              <div>
+                <div class="handover-card-small">
+                  <h4><i data-lucide="file-down" style="color: var(--accent);"></i> 필수 양식 및 템플릿</h4>
+                  <div style="display: flex; flex-direction: column; gap: 10px;" id="handover-templates-list">
+                    <!-- JS dynamic download buttons -->
+                  </div>
+                </div>
+
+                <div class="handover-card-small">
+                  <h4><i data-lucide="check-check" style="color: var(--success);"></i> 전입 후 1주일 내 확인 항목</h4>
+                  <div class="todo-list" id="handover-weekly-checklist">
+                    <!-- JS checklist -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 3: EXCEL GUIDE ==================== -->
+        <section class="tab-content" id="tab-excel">
+          <div class="excel-filter-bar">
+            <button class="filter-btn active" data-filter="all">전체보기</button>
+            <button class="filter-btn" data-filter="text">텍스트/추출</button>
+            <button class="filter-btn" data-filter="lookup">찾기/참조</button>
+            <button class="filter-btn" data-filter="math">수식/집계</button>
+            <button class="filter-btn" data-filter="date">날짜/근속</button>
+          </div>
+
+          <div class="excel-list" id="excel-formula-list">
+            <!-- JS dynamic binding for formulas -->
+          </div>
+
+          <!-- Interactive Excel try-out widget -->
+          <div class="card excel-practice-card">
+            <div class="card-title">
+              <i data-lucide="terminal"></i>
+              <span>라이브 엑셀 수식 실습 (주민번호 성별 & 생년월일 추출기)</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary);">
+              하단의 입력창에 가상의 주민등록번호를 입력하고 결과를 확인해보세요. 실제 엑셀 수식의 원리를 바로 확인할 수 있습니다.
+            </p>
+            <div class="practice-grid">
+              <div class="practice-input-group">
+                <div class="input-box-wrapper">
+                  <label for="practice-ssn-input">가상 주민등록번호 (기호 포함)</label>
+                  <input type="text" class="practice-input" id="practice-ssn-input" placeholder="예: 950824-1023456" value="010315-3012345">
+                </div>
+                <div class="input-box-wrapper">
+                  <label for="practice-join-date">입사일 (근속기간 계산용)</label>
+                  <input type="date" class="practice-input" id="practice-join-date" value="2022-03-01">
+                </div>
+              </div>
+              <div class="practice-output-group">
+                <div style="margin-bottom: 12px;">
+                  <div class="output-formula">성별 판별 (주민번호 8번째 자리 기준): =IF(OR(MID(A1,8,1)="1",MID(A1,8,1)="3"), "남성", "여성")</div>
+                  <div class="output-value-box" id="practice-gender-output">남성</div>
+                </div>
+                <div>
+                  <div class="output-formula">근속 개월수 계산: =DATEDIF(입사일, 오늘, "M") &amp; "개월"</div>
+                  <div class="output-value-box" id="practice-tenure-output">50개월</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 4: HWP RULES ==================== -->
+        <section class="tab-content" id="tab-hwp">
+          <div class="tip-banner" style="margin-bottom: 24px;">
+            <i data-lucide="info"></i>
+            <div class="tip-content">
+              <h4>상호작용 한글 기안문 요람</h4>
+              <p>아래 기안문의 <strong>점선 박스로 표시된 핫스팟(여백, 날짜, 서명 등)</strong>에 마우스를 올리거나 클릭하시면, 공식 공문서 작성 지침에 따른 상세 룰과 올바른 예시를 확인할 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="hwp-container">
+            <!-- Simulated HWP Sheet -->
+            <div class="hwp-visual-sheet">
+              <!-- Hover Markers -->
+              <div class="hwp-marker hwp-marker-margin-top" data-section="margins" title="여백 규정">위/아래 여백: 20mm/15mm (클릭)</div>
+              <div class="hwp-marker hwp-marker-header" data-section="header" title="행정기관명 및 수신자">수신처 및 발신처 표기 규격 (클릭)</div>
+              <div class="hwp-marker hwp-marker-title" data-section="title" title="기안문 제목">제목 시작 및 줄 바꿈 규칙 (클릭)</div>
+              <div class="hwp-marker hwp-marker-body" data-section="body" title="본문 및 붙임 항목">"아래" 및 끝 표시 규정 (클릭)</div>
+              <div class="hwp-marker hwp-marker-attachment" data-section="attachment" title="첨부파일">붙임 서류 표시 규칙 (클릭)</div>
+              <div class="hwp-marker hwp-marker-footer" data-section="footer" title="발신명의 및 결재라인">발신명의 및 서명 날인 (클릭)</div>
+
+              <div class="hwp-doc-header">자 치 행 정 과</div>
+              <div class="hwp-doc-row"><span class="hwp-doc-label">수 신 자</span><span class="hwp-doc-val">수신처 참조(인사 담당관)</span></div>
+              <div class="hwp-doc-row"><span class="hwp-doc-label">(경 우)</span><span class="hwp-doc-val"></span></div>
+              <div class="hwp-doc-row"><span class="hwp-doc-label">제    목</span><span class="hwp-doc-val" style="font-weight: bold;">신임 주무관 역량강화 교육 참석 협조 요청</span></div>
+              
+              <div class="hwp-doc-body">
+                <p>1. 행정 발전 및 실무자 역량 제고를 위한 관련입니다.</p>
+                <p>2. 공직 임용 후 실무 행정 및 서무 실무에 대한 이해를 돕기 위해 신임 공직자 역량강화 교육을 아래와 같이 개최하오니 각 부서에서는 대상 주무관이 참석할 수 있도록 협조하여 주시기 바랍니다.</p>
+                
+                <p style="margin-left: 10px; margin-top: 10px; font-weight: bold;">아래</p>
+                <p style="margin-left: 20px;">가. 일 시: 2026. 5. 29.(금) 14:00 ~ 17:00</p>
+                <p style="margin-left: 20px;">나. 대 상: 2026년 신규 임용 공무원 전원</p>
+                <p style="margin-left: 20px;">다. 장 소: 본관 3층 대회의실</p>
+                <p style="margin-left: 20px;">라. 내 용: 공문서 작성 및 예산 지출 기초 실무 교육</p>
+                
+                <div class="hwp-doc-attachment">
+                  붙임&nbsp;&nbsp;1. 신임 공직자 역량강화 교육 계획 1부.<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 교육 대상자 명단 1부.&nbsp;&nbsp;끝.
+                </div>
+              </div>
+
+              <div class="hwp-doc-sign">자 치 행 정 과 장</div>
+            </div>
+
+            <!-- Details Display Panel -->
+            <div class="hwp-instruction-card">
+              <div class="instruction-panel" id="hwp-detail-panel">
+                <h4 id="hwp-detail-title"><i data-lucide="file-check"></i> <span>여백 및 폰트 규정 (기본)</span></h4>
+                <div class="instruction-list" id="hwp-detail-contents">
+                  <div class="instruction-item">
+                    <i data-lucide="check"></i>
+                    <span>공문서 기본 글꼴은 <strong>맑은 고딕, 나눔고딕</strong> 또는 <strong>휴먼명조</strong>를 권장하며 크기는 기본 <strong>15pt ~ 21pt(본문은 12pt)</strong>로 지정합니다.</span>
+                  </div>
+                  <div class="instruction-item">
+                    <i data-lucide="check"></i>
+                    <span><strong>편집 용지 여백:</strong> 위쪽 30mm(머리말 15mm 포함), 아래쪽 25mm(꼬리말 15mm 포함), 왼쪽 20mm, 오른쪽 20mm를 통상적으로 준수합니다.</span>
+                  </div>
+                </div>
+                <div class="comparison-box" id="hwp-detail-comparison">
+                  <div class="comp-wrong">
+                    <strong>틀린 표기</strong><br>
+                    2026.5.26.(마침표 후 띄어쓰기 누락 및 월 앞에 0 표기 등)
+                  </div>
+                  <div class="comp-right">
+                    <strong>올바른 표기</strong><br>
+                    2026. 5. 26.(연월일 마침표 후 각 1칸 공백 적용)
+                  </div>
+                </div>
+              </div>
+
+              <!-- General HWP Rules Accordion -->
+              <div class="card">
+                <div class="card-title"><i data-lucide="info"></i> <span>핵심 기안 규칙 가이드</span></div>
+                <div class="todo-list" style="gap:14px;">
+                  <div>
+                    <strong style="font-size:13px; display:block; margin-bottom:4px;">1. 날짜 및 시간 표기법</strong>
+                    <span style="font-size:12px; color:var(--text-secondary);">날짜는 온점을 사용해 표기하며(예: 2026. 5. 26.), 시간은 24시간 표기법으로 쌍점(:)을 찍어 구분합니다(예: 14:00). 시, 분 단어는 한글로 쓰지 않습니다.</span>
+                  </div>
+                  <div>
+                    <strong style="font-size:13px; display:block; margin-bottom:4px;">2. "아래" 및 "붙임" 간격 규정</strong>
+                    <span style="font-size:12px; color:var(--text-secondary);">본문 문장 끝마침 후 1줄(엔터)을 띄우고 중앙 또는 좌측에 "아래"를 적고, 붙임 서류는 항목 끝 부분에 한 칸 띄우고 "끝."을 기입합니다.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 5: EXPENDITURE ==================== -->
+        <section class="tab-content" id="tab-expenditure">
+          <div class="expenditure-grid">
+            <!-- Left Side: Accounting Accordion -->
+            <div class="accordion-group">
+              <div class="card-title" style="margin-bottom: 0;">
+                <i data-lucide="book-open"></i>
+                <span>지출 및 여비 세부 규정</span>
+              </div>
+              
+              <div class="accordion-item active">
+                <div class="accordion-header">
+                  <span>🚗 관내 및 관외 출장 여비 지급 기준</span>
+                  <i data-lucide="chevron-down" class="accordion-icon"></i>
+                </div>
+                <div class="accordion-body" style="max-height: 500px;">
+                  <div class="accordion-content">
+                    <p>공무원 여비 규정에 따른 지급 기준은 아래와 같습니다.</p>
+                    <ul>
+                      <li><strong>관내 출장 (왕복 12km 미만 또는 4시간 미만):</strong> 10,000원 지급</li>
+                      <li><strong>관내 출장 (왕복 12km 이상이며 4시간 이상):</strong> 20,000원 지급 (공용 차량 이용 시 10,000원 감액)</li>
+                      <li><strong>관외 출장:</strong> 운임 실비(KTX, 고속버스 등 영수증 증빙), 일비(20,000원), 식비(25,000원/1일), 숙박비(실비 지급 범위 내 정산)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>💳 신용카드(공공구매카드) 사용 및 소액 지출 결의</span>
+                  <i data-lucide="chevron-down" class="accordion-icon"></i>
+                </div>
+                <div class="accordion-body">
+                  <div class="accordion-content">
+                    <p>소모품이나 일상 용역비 지출 시 공공구매카드 결제 절차입니다.</p>
+                    <ul>
+                      <li>품의서 작성 (용도, 규격, 수량, 금액 명시) 후 사전 결재 득함</li>
+                      <li>물품 구입 및 공공카드 결제 (영수증 보관)</li>
+                      <li>지출결의서(카드) 작성 및 증빙 서류 첨부하여 회계과 제출</li>
+                      <li><strong>카드 결제일 이전 정산 필수:</strong> 매월 지정된 결제일 이전 지방재정시스템(e-호조) 입력 완료 요망</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>👨‍🏫 강사료 및 원고료 지급 기준</span>
+                  <i data-lucide="chevron-down" class="accordion-icon"></i>
+                </div>
+                <div class="accordion-body">
+                  <div class="accordion-content">
+                    <p>자문 및 외부 교육 강사 수당 지급을 위한 회계 기준입니다.</p>
+                    <ul>
+                      <li><strong>일반 강사료 (기본 1시간):</strong> 일반 강사 150,000원, 전문 강사 및 교수 250,000원 (초과 1시간당 기준 지급율 추가)</li>
+                      <li><strong>필수 증빙 서류:</strong> 강의 계획서, 강사 이력서, 통장 사본, 신분증 사본, 개인정보 수집 이용 동의서</li>
+                      <li><strong>원천징수:</strong> 125,000원(세전 금액) 초과 지급 시 8.8% 세금 원천징수 후 실지급액 송금</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Attachment Checklist Calculator -->
+            <div class="card checklist-card">
+              <div class="card-title">
+                <i data-lucide="check-check"></i>
+                <span>지출 결의 증빙 서류 자동 판별기</span>
+              </div>
+              <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                지출하고자 하는 항목을 선택하면, 지출결의서 작성 시 첨부해야 할 법정 필수 증빙 서류를 자동으로 분류해 줍니다.
+              </p>
+              <div class="checklist-selector">
+                <label for="expenditure-type-select" style="font-size: 13px; font-weight: 600; display:block; margin-bottom:8px;">지출 대상 항목</label>
+                <select class="form-select" id="expenditure-type-select" style="width: 100%;">
+                  <option value="travel">출장 여비 정산</option>
+                  <option value="card-goods">공용카드 물품(소모품) 구입</option>
+                  <option value="lecturer">외부 강사 수당 지급 (12만 5천원 초과)</option>
+                  <option value="repair">시설 소액 보수 공사 (대가 지급)</option>
+                </select>
+              </div>
+
+              <div class="card-title" style="font-size: 14px;"><i data-lucide="clipboard-list" style="width:16px;"></i> 필요 증빙 서류 체크리스트</div>
+              <div class="checklist-results" id="expenditure-checklist-results">
+                <!-- Dynamic check boxes mapped in app.js -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 6: HANDHELD TOOLS ==================== -->
+        <section class="tab-content" id="tab-tools">
+          <div class="tools-grid">
+            <!-- Tool 1: Byte Counter -->
+            <div class="tool-card">
+              <div class="tool-header">
+                <i data-lucide="text-cursor-input"></i>
+                <span>공문서 바이트(Byte) 및 글자수 계산기</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                공문서 및 보도자료 요약문 작성 시 글자 크기와 바이트 수 제한을 체크할 수 있습니다. <strong>한글/한자/일어 등은 2바이트, 영문/공백/숫자/기호는 1바이트</strong>로 공용 문서 규격대로 계산됩니다.
+              </p>
+              <div class="char-counter-wrapper">
+                <textarea class="char-textarea" id="tools-textarea" placeholder="여기에 텍스트를 입력하거나 붙여넣으세요..."></textarea>
+                <div class="counter-grid">
+                  <div class="counter-item">
+                    <div class="counter-num" id="char-total-count">0</div>
+                    <div class="counter-label">총 공백 포함 글자수</div>
+                  </div>
+                  <div class="counter-item">
+                    <div class="counter-num" id="char-no-space-count">0</div>
+                    <div class="counter-label">공백 제외 글자수</div>
+                  </div>
+                  <div class="counter-item">
+                    <div class="counter-num" id="char-byte-count">0</div>
+                    <div class="counter-label">공문서 규격 바이트</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tool 2: Travel Allowance Calculator -->
+            <div class="tool-card">
+              <div class="tool-header">
+                <i data-lucide="milestone"></i>
+                <span>출장 여비 자가진단 계산기</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                행정 업무 중 출장 유형과 거리, 숙박 요건을 입력하면 공무원 여비 조례에 따른 지급 총액을 모의 연산합니다.
+              </p>
+              <div class="travel-calc-form">
+                <div class="form-group">
+                  <label for="travel-calc-type">출장 구분</label>
+                  <select class="form-select" id="travel-calc-type">
+                    <option value="local-long">관내 출장 (왕복 12km 이상 &amp; 4시간 이상)</option>
+                    <option value="local-short">관내 출장 (왕복 12km 미만 혹은 4시간 미만)</option>
+                    <option value="national">관외 출장 (시외 출장)</option>
+                  </select>
+                </div>
+
+                <!-- Visible only for local-long -->
+                <div class="form-group" id="local-car-group">
+                  <label for="travel-calc-car">공용 차량 이용 여부</label>
+                  <select class="form-select" id="travel-calc-car">
+                    <option value="no">자가용 혹은 대중교통 이용 (0원 감액)</option>
+                    <option value="yes">공용 차량 이용 (10,000원 감액)</option>
+                  </select>
+                </div>
+
+                <!-- Visible only for national -->
+                <div class="practice-grid" id="national-details-group" style="display: none; margin-top: 0; padding-top: 0;">
+                  <div class="form-group">
+                    <label for="travel-calc-days">출장 일수 (식비/일비)</label>
+                    <input type="number" class="practice-input" id="travel-calc-days" value="1" min="1">
+                  </div>
+                  <div class="form-group">
+                    <label for="travel-calc-lodging">숙박 일수</label>
+                    <input type="number" class="practice-input" id="travel-calc-lodging" value="0" min="0">
+                  </div>
+                </div>
+
+                <div class="travel-result-box">
+                  <span class="travel-result-label">예상 지급 여비 합계</span>
+                  <span class="travel-result-val" id="travel-calc-result">20,000 원</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 7: AI ASSISTANT ==================== -->
+        <section class="tab-content" id="tab-ai-assistant">
+          <div class="ai-tab-container">
+            <!-- Header status bar -->
+            <div class="ai-chat-header">
+              <div class="ai-status-dot"></div>
+              <div class="ai-chat-title">
+                <h3>서무실록 AI 지식 비서</h3>
+                <p>업무 매뉴얼, 공문서 작성, 엑셀 수식 등 궁금한 행정 실무를 즉석에서 답해드립니다.</p>
+              </div>
+            </div>
+
+            <!-- Messages Window -->
+            <div class="ai-chat-messages" id="ai-chat-messages-container">
+              <div class="chat-bubble-wrapper ai">
+                <div class="chat-avatar">AI</div>
+                <div class="chat-bubble">
+                  안녕하세요! 공직서무실록 AI 비서입니다. 신규 공직자분들의 빠른 실무 적응을 지원합니다. 아래 추천 질문을 클릭하시거나 입력창에 궁금하신 사항을 자유롭게 적어주세요.
+                </div>
+                <div class="chat-time">21:59</div>
+              </div>
+            </div>
+
+            <!-- Quick Suggestions chips -->
+            <div class="chat-suggestions">
+              <div class="suggestion-chip" onclick="askAi('출장비 여비 기준 알려줘')">🚗 관내/관외 여비 기준</div>
+              <div class="suggestion-chip" onclick="askAi('엑셀로 주민등록번호 성별 구하는 법')">📊 엑셀 성별 구하기</div>
+              <div class="suggestion-chip" onclick="askAi('공문서 날짜 표기 방법 가르쳐줘')">✍️ 공문서 날짜/시간 포맷</div>
+              <div class="suggestion-chip" onclick="askAi('지출결의할 때 증빙서류 뭐 필요한가요')">💳 카드 정산 증빙 서류</div>
+            </div>
+
+            <!-- Message Input Area -->
+            <div class="ai-chat-input-bar">
+              <input type="text" class="chat-input" id="ai-chat-input" placeholder="질문을 입력하세요... (예: 공문서 끝 표시는 어떻게 하나요?)">
+              <button class="chat-send-btn" id="ai-chat-send-btn">
+                <span>보내기</span>
+                <i data-lucide="send" style="width:14px;height:14px;"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== SEARCH MODAL OVERLAY ==================== -->
+  <div class="search-modal-overlay" id="search-modal-overlay">
+    <div class="search-modal">
+      <div class="search-modal-header">
+        <i data-lucide="search"></i>
+        <input type="text" class="search-modal-input" id="search-modal-input" placeholder="검색어를 입력하세요 (예: 여비, 주민번호, 기안, 복무)...">
+        <span class="search-modal-close-btn" id="search-modal-close-btn">ESC 닫기</span>
+      </div>
+      <div class="search-results-list" id="search-results-list">
+        <div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 13px;">
+          검색어를 입력하시면 관련 엑셀 수식, 공문서 규칙, 지출 가이드를 찾아 드립니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Link interaction logic file -->
+  <script src="app.js"></script>
+</body>
+</html>
